@@ -18,6 +18,8 @@ function Addon:Initialize()
     Addon:RegisterEvent("BANKFRAME_CLOSED", Addon.Update)
     Addon:RegisterEvent("PLAYERBANKBAGSLOTS_CHANGED", Addon.Update)
     Addon:Update()
+
+    Addon:HookTooltips()
 end
 
 function Addon:Update()
@@ -82,6 +84,32 @@ function Addon:GetCharacterDatabase(name)
     db.equipped = db.equipped or {}
 
     return db
+end
+
+function Addon:GetItemCounts(itemId)
+    local counts = {}
+
+    if not itemId or not ElvDB or not ElvDB.items or not ElvDB.items.realm or not ElvDB.items.realm[E.myrealm] then
+        return counts
+    end    
+
+    Addon:UpdateItemCount(itemId)
+
+    local characters = ElvDB.items.realm[E.myrealm].character
+    for name, char in next, characters do
+        local bagCount = char.bags and char.bags[itemId] or 0
+        local bankCount = char.bank and char.bank[itemId] or 0
+        local equippedCount = char.equipped and char.equipped[itemId] or 0
+        if bagCount > 0 or bankCount > 0 or equippedCount > 0 then
+            counts[name] = { class = char.class, bags = bagCount, bank = bankCount, equipped = equippedCount }
+        end
+    end
+
+    return counts
+end
+
+function Addon:GetItemIdFromLink(itemLink)
+    return itemLink and select(5, string.find(itemLink, "|?c?f?f?(%x*)|?H?([^:]*):?(%d+):?(%d*):?(%d*):?(%d*):?(%d*):?(%d*):?(%-?%d*):?(%-?%d*):?(%d*):?(%d*):?(%-?%d*)|?h?%[?([^%[%]]*)%]?|?h?|?r?"))
 end
 
 function Addon:UpdateItemCount(itemId, db)
