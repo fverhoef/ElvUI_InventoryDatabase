@@ -1,0 +1,10 @@
+## Interface: 20503
+## Author: Neya
+## Version: 0.1
+## Title: |cff1784d1ElvUI|r |cff03D3FFInventory Database|r
+## Notes: Adds an inventory database to ElvUI.
+## RequiredDeps: ElvUI
+## DefaultState: Enabled
+## X-ElvuiVersion: 2.21
+
+ElvUI_InventoryDatabase.xml
