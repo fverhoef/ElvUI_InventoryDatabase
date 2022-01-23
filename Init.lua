@@ -5,7 +5,7 @@ local LSM = LibStub("LibSharedMedia-3.0")
 
 local Addon = E:NewModule(addonName, "AceEvent-3.0")
 Addon.name = "ElvUI Inventory Database"
-Addon.title = "|cff1784d1ElvUI|r |cff03D3FFInventory Database|r"
+Addon.title = "|cff1784d1ElvUI|r |cffb50568Inventory Database|r"
 Addon.version = GetAddOnMetadata(addonName, "Version")
 
 local build = select(4, GetBuildInfo())
